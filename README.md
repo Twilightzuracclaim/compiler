@@ -11,20 +11,31 @@ The Helios library is written in Javascript, with complete Typescript type-cover
 ```
 spending time_lock
 
+import { tx } from ScriptContext
+
 struct Datum {
-    lockUntil:   Time
+    lock_until:   Time
     owner:       PubKeyHash // the owner can always unlock the assets
     beneficiary: PubKeyHash // beneficiary can only unlock the assets after 'lockUntil'
 }
 
-func main(datum: Datum, _, ctx: ScriptContext) -> Bool {
-    tx: Tx = ctx.tx;
-    now: Time = tx.time_range.start;
+enum Redeemer {
+    Cancel
+    Unlock
+}
 
-    tx.is_signed_by(datum.owner) || (
-        tx.is_signed_by(datum.beneficiary) &&
-        now > datum.lockUntil
-    )
+func main(datum: Datum, redeemer: Redeemer) -> () {
+    redeemer.switch{
+        Cancel => {
+            assert(tx.is_signed_by(datum.owner), "not signed by owner")
+        },
+        Unlock => {
+            now: Time = tx.time_range.start
+
+            assert(now > datum.lock_until, "time lock not yet expired")
+            assert(tx.is_signed_by(datum.beneficiary), "not signed by beneficiary")
+        }
+    }
 }
 ```
 

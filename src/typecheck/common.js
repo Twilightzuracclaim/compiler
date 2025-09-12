@@ -983,7 +983,7 @@ export class FuncType extends Common {
                 } else {
                     ctx.errors.type(
                         site,
-                        `expected '${thisArg.type.toString()}' for arg '${key}', got '${namedArg.toString()}`
+                        `expected '${thisArg.type.toString()}' for arg '${key}', got '${namedArg.toString()}'`
                     )
                 }
             }
