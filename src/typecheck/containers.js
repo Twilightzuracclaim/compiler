@@ -1018,6 +1018,7 @@ const OptionType = new ParametricType({
             }),
             genInstanceMembers: (self) => ({
                 ...genCommonInstanceMembers(self),
+                is_some: new FuncType([], BoolType),
                 map: (() => {
                     const a = new Parameter(
                         "a",

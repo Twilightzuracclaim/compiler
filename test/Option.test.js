@@ -99,4 +99,19 @@ describe("Option", () => {
             )
         })
     })
+
+    describe("Option[Int].is_some()", () => {
+        const runner = compileForRun(`testing option_is_some
+            func main(opt: Option[Int]) -> Bool {
+                opt.is_some()
+        }`)
+
+        it("Option[Int]::None.is_some() returns false", () => {
+            runner([constr(1)], False)
+        })
+
+        it("Option[Int]::Some.is_some() returns True", () => {
+            runner([constr(0, int(0))], True)
+        })
+    })
 })

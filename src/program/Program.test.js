@@ -51,6 +51,28 @@ describe(Program.name, () => {
         program.compile({ optimize: true })
     })
 
+    it("literal string can contain square brackets", () => {
+        const mainSrc = `testing lit_string_with_parens
+        const purposes: []String = []String{"a", "b"}
+
+        func mkTokenName(s: String) -> String {
+            s
+        }
+
+        func main() -> () {
+            print(
+                "✅: 💣 💥 uut[s"
+                + purposes.join(",")
+                + "}"
+                + mkTokenName("")
+            )
+        }`
+
+        const program = new Program(mainSrc)
+
+        program.compile({ optimize: false })
+    })
+
     it("generates a CompilerError if a namespace member isn't found", () => {
         const mainSrc = `spending undefined_namespace_member
         import ScriptContext

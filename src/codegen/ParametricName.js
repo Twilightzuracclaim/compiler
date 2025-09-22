@@ -161,17 +161,18 @@ export class ParametricName {
      */
     replaceTemplateNames(ir) {
         this._ttp.forEach((name, i) => {
-            ir = ir.replace(new RegExp(`\\b${TTPP}${i}`, "gm"), name)
+            ir = ir.replace(new RegExp(`\\b${TTPP}${i}`, "gm"), name) // TODO: find a better way, because this doesn't work in literal string inside the ir if they contain exactly this RegExp
         })
 
         this._ftp.forEach((name, i) => {
-            ir = ir.replace(new RegExp(`\\b${FTPP}${i}`, "gm"), name)
+            ir = ir.replace(new RegExp(`\\b${FTPP}${i}`, "gm"), name) // TODO: find a better way, because this doesn't work in literal string inside the ir if they contain exactly this RegExp
         })
 
         return ir
     }
 
     /**
+     * TODO: should not match inside quotes
      * @example
      * IRParametricName.matches("__helios__map[__T0@__T1]__fold[__F2@__F3]") == true
      * @example

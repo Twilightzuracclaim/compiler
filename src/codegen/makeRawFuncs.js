@@ -6778,6 +6778,16 @@ export function makeRawFunctions(simplify, isTestnet) {
     )
     add(
         makeRawFunc(
+            `__helios__option[${TTPP}0]__is_some`,
+            `(self) -> {
+			() -> {
+				__core__equalsInteger(__core__fstPair(__core__unConstrData__safe(self)), 0)
+			}
+		}`
+        )
+    )
+    add(
+        makeRawFunc(
             `__helios__option[${TTPP}0]__unwrap`,
             `(self) -> {
 		() -> {
