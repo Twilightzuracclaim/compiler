@@ -128,4 +128,28 @@ describe(parseScript.name, () => {
                 }`)
         }, /SyntaxError/)
     })
+
+    it("throws a syntax error for a spurious comma", () => {
+        const src = `
+        minting _name
+
+        func main() -> Bool {
+            true
+                && updatedRec.validateUpdate(
+                cctx: cctx, previous: previousRec
+            ),
+            // ^^ comma-splice should be an error
+            && bREQTgroup(     
+                reqt: "updates can only be submitted by the initiator of a change proposal",
+                callback: () -> Bool {
+                    true
+                }
+            )
+        }
+        `
+
+        throws(() => {
+            parseScript(src)
+        }, /unexpected separator/)
+    })
 })

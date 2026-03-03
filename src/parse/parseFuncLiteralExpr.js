@@ -55,6 +55,13 @@ export function makeFuncLiteralExprParser(parseValueExpr) {
             }
 
             bodyExpr = parseValueExpr(ctx.inGroup(g), 0)
+        } else if ((m = r.findNextMatch(group("{", { minLength: 2 })))) {
+            r.endMatch()
+
+            ctx.errors.syntax(
+                m[1].separators[0].site,
+                `unexpected separator '${m[1].separators[0].value}'`
+            )
         } else {
             r.endMatch()
 
